@@ -15,11 +15,16 @@ body {
   text-decoration: underline;
 }
 
-a.anchor {
+.anchor {
   display: block;
   position: relative;
   top: -250px;
   visibility: hidden;
+}
+
+.menu-item {
+  padding-top: 40px; 
+  margin-top: -40px;
 }
 
 .navbar-default {
