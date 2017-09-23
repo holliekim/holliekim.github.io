@@ -3,7 +3,9 @@ body {
 }
 
 #jumbo {
-  background-color:lightblue;
+  background: url("background.jpeg");
+  background-size: cover;
+  color: white;
 }
 
 .content {
@@ -26,6 +28,16 @@ body {
   padding-top: 40px; 
   margin-top: -40px;
 }
+
+/*.btn-default {
+  background-color: #7f969b;
+  border-color: transparent;
+}*/
+
+
+
+
+
 
 .navbar-default {
   background-color: #a2bfc6;
