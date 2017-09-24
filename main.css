@@ -9,8 +9,8 @@ body {
 }
 
 .content {
-  padding-right: 75px;
-  padding-left: 75px;
+  padding-right: 3%;
+  padding-left: 3%;
 }
 
 .underline {
@@ -34,6 +34,9 @@ body {
   border-color: transparent;
 }*/
 
+.overflow-hidden {
+  overflow: hidden;
+}
 
 
 
