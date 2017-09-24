@@ -3,7 +3,8 @@ body {
 }
 
 #jumbo {
-  background: url("background.png");
+  /*background: url("background.png");*/
+  background-color: black;
   background-size: cover;
   color: white;
 }
