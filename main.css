@@ -37,8 +37,6 @@ body {
 
 
 
-
-
 .navbar-default {
   background-color: #a2bfc6;
   border-color: #85989d;
@@ -58,7 +56,8 @@ body {
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #3093ac;
+  background-color: #85989d;
+  color: #164753;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
