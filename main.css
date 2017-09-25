@@ -4,7 +4,7 @@ body {
 
 #jumbo {
   /*background: url("background.png");*/
-  background-color: black;
+  background-color: #466596;
   background-size: cover;
   color: white;
 }
@@ -37,6 +37,12 @@ body {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.divide {
+  height: 25px;
+  background-color: #466596;
+  text-align: center;
 }
 
 
