@@ -5,9 +5,6 @@
 <meta charset="utf-8">
 <title>Leaflet</title>
 
-<!--test geoJSON file-->
-<script src="geojsontest.js" type="text/javascript"></script>
-
 <!-- Leaflet's CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
    integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
@@ -27,6 +24,12 @@
 
 <!--Omnivore-->
 <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+
+<!--test geoJSON file-->
+<script src="test.geojson" type="text/javascript"></script>
+
+<!--jQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 
@@ -62,13 +65,13 @@
 	//use addTo to have layer turned on at load
 	//use omnivore to convert csv to json
 
-	 var mystyle = {
+	/* var mystyle = {
 		"color": "#ff7800",
 		"weight": 5,
 		"opacity": 0.65 
 		 };
 
-	L.GeoJSON(geojsontest).addTo(map);
+	L.GeoJSON(geojsontest).addTo(map);*/
 
 
 	/*var customLayer = L.geoJSON(null, {
@@ -91,6 +94,10 @@
     		})
     	})
     }).addTo(map);*/
+
+    $.getJSON("test.geojson", function(data) {
+    	L.geoJson(data).addTo(map);
+    });
 
 
 
