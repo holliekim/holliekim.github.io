@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8"> 
+<title>Status Maps</title>
+
+<link rel="stylesheet" href="https://js.arcgis.com/4.4/esri/css/main.css">
+<script src="https://js.arcgis.com/4.4/"></script>
+
+<style>
+	html, body, #viewDiv { width: 1000px; height: 800px;}
+
+	.esri-legend {
+      font-size: 0pt;
+    }
+
+    .esri-legend__service-label{
+    	font-size: 10pt;
+
+    }
+
+    .esri-layer-list{
+    	width: 250px;
+    }
+
+</style>
+</head>
+
+<body>
+<div id= "viewDiv"></div>
+
+<script>
+
+require([
+	"esri/Map",
+	"esri/views/MapView",
+	"esri/layers/FeatureLayer",
+	"esri/widgets/Home",
+	"esri/widgets/LayerList",
+	"esri/widgets/Legend",
+	"esri/layers/GroupLayer",
+	"esri/symbols/TextSymbol",
+	"esri/layers/GraphicsLayer",
+	"esri/Graphic",
+	"esri/geometry/Point",
+	"esri/layers/MapImageLayer",
+	"esri/layers/TileLayer",
+
+	"dojo/domReady!"
+], function (Map, MapView, FeatureLayer, Home, LayerList, Legend, GroupLayer, TextSymbol, GraphicsLayer, Graphic, Point, MapImageLayer, TileLayer){
+
+	var map = new Map({});
+
+	var basemap = new TileLayer({
+		url: "https://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer",
+		listMode: "hide"
+	});
+
+	var view = new MapView({
+		container: "viewDiv",
+		map: map,
+		center: [-92.33, 46.46],
+		zoom: 7
+	});
+
+	//Add labels
+	var countylabellayer = new MapImageLayer({
+		url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
+		listMode: "hide",
+        sublayers: [{
+          id: 3,
+          definitionExpression: "state_name = 'Minnesota'",
+          //make features invisible, keeps labels on
+          opacity: 0,
+          labelsVisible: true,
+          labelingInfo: [{
+            labelExpression: "[name]",
+            labelPlacement: "always-horizontal",
+            symbol: new TextSymbol({
+              color: "black",
+              font: {
+              	family :"calibri",
+                size: 8
+              }
+            })
+          }]
+      	}]
+  	});
+
+	//add label for RLN
+	var text = new TextSymbol({
+		text: "Red Lake Nation",
+		color: "black",
+		font: {
+			size: 8,
+			family: "calibri"
+		}
+	});
+
+	var glayer = new GraphicsLayer({
+		listMode: "hide"
+	});
+
+	var g = new Graphic();
+	g.geometry = new Point(-95.146233, 48.00962);
+    g.symbol = text;
+    glayer.add(g);
+
+
+	var homebutton = new Home({
+		view: view
+	});
+
+	
+	var layerlist = new LayerList({
+		view: view
+	});
+
+
+	// Add via Group Layer
+	var geocoding = new GroupLayer ({
+		title: "Geocoding",
+		visibilityMode: "exclusive",
+		
+
+		layers:[
+		new FeatureLayer({
+			title: "ALI to RCL",
+			portalItem:{id: "ef7f797139514ba08e1332d8b32bbfaa"}
+		}),
+
+		new FeatureLayer({
+			title: "ALI to ADP",
+			portalItem: {id: "7b46fa64799f42a9a2191e8a86e57a61"}
+			
+		}),
+
+		new FeatureLayer({
+			title: "ADP to RCL",
+			portalItem: {id: "699486c81b5c4ad8aa411d3dbe4e0433"}
+		})
+		],
+		visible: false
+	});
+
+	var validation = new GroupLayer ({
+		title: "Validation Phase Status",
+		visibilityMode: "exclusive",
+
+
+		layers:[
+
+		new FeatureLayer({
+			title: "Addresses",
+			portalItem: {id: "6101f17dac9e47d58b5ec8f2c51a12d4"}
+
+		}),
+		
+		new FeatureLayer({
+			title: "Street Names",
+			portalItem: {id: "23f5382a0b874157836ee53ae55c7d10"}
+			
+		}),
+
+		new FeatureLayer({
+			title: "Community Names",
+			portalItem:{id: "0548fe8a577547c6bd7a78beb650f844"}
+			
+			
+		}),
+
+		new FeatureLayer({
+			title: "Kickoff Meetings",
+			portalItem: {id: "f791f11385024eb3b31ab11994a7bf7c"}
+		}),
+
+		],
+		
+	});
+
+	var datacollect = new GroupLayer({
+		title: "Data Collection",
+		visibilityMode: "exclusive",
+		layers:[
+
+			new FeatureLayer({
+				title: "Road Centerlines",
+				portalItem:{id:"39eb5d3ae6d1400e9d90f151c679bab2"}
+			}),
+
+			new FeatureLayer({
+				title: "ESZs",
+				portalItem: {id: "f7c9b61c166040cda6b9a7e870657671"}
+			}),
+
+			new FeatureLayer ({
+				title: "Address Points",
+				portalItem:{id:"3061464b7800478f8a01137791d5f38d"}
+			})
+		],
+		visible: false
+	});
+
+	var alllayers = new GroupLayer({
+		title: "All Layers",
+		visibilityMode: "exclusive"
+	});
+
+	alllayers.add(datacollect);
+	alllayers.add(geocoding);
+	alllayers.add(validation);
+
+
+	var legend = new Legend ({
+		view: view,
+		layerInfos: [{
+          layer: geocoding
+     	},{
+          layer: validation
+      },{
+      	  layer: datacollect
+      }]
+     });
+
+	//add status layer to map 
+	/*map.add(geocoding);
+	map.add(validation);
+	map.add(datacollect);*/
+
+	//add basemap and layers
+	map.add(basemap);
+	map.add(alllayers);
+	map.add(glayer);
+	map.add(countylabellayer);
+
+	//add buttons, layers, legend
+	view.ui.add(homebutton, "top-left");
+	view.ui.add(layerlist, "top-right");
+	view.ui.add(legend, "bottom-right");
+
+
+function expandlayerlist(){
+	var ctSpans = document.getElementsByClassName("esri-layer-list__child-toggle");
+
+	/*ctSpans["0"]["data-item"].open = true;
+	ctSpans[1]["data-item"].open = true;
+	ctSpans[2]["data-item"].open = true;
+	ctSpans[3]["data-item"].open = true;
+	*/
+
+	for (var i = 0; i < ctSpans.length; i++){
+		ctSpans[i]["data-item"].open = true;
+		console.log(ctSpans[i]);
+	}
+
+}
+
+function expandPLEASE() {
+
+	// change aria-expanded
+	var x = document.getElementsByClassName("esri-layer-list__child-toggle")[0].getAttribute("aria-expanded");
+		if (x == "false") {
+		x = "true"
+		document.getElementsByClassName("esri-layer-list__child-toggle")[0].setAttribute("aria-expanded", x);
+		}
+	// change title
+	var y = document.getElementsByClassName("esri-layer-list__child-toggle")[0].getAttribute("title");
+		if (y == "Expand") {
+		y = "Collapse";
+		document.getElementsByClassName("esri-layer-list__child-toggle")[0].setAttribute("title", y);
+		}
+
+	// change hidden
+	var z = document.getElementsByClassName("esri-layer-list__list esri-layer-list__list--root esri-layer-list__list--independent")[1].hasAttribute("hidden");
+		alert(z);
+		if (z) {
+		var h1 = document.getElementsByClassName("esri-layer-list__list esri-layer-list__list--root esri-layer-list__list--independent")[1];
+		h1.removeAttribute("hidden");
+		}
+
+} // end expandLayerList function
+
+
+window.onload = expandlayerlist;
+
+//
+});
+
+</script>
+</body>
+</html>
