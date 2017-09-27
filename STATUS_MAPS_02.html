@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://js.arcgis.com/4.4/esri/css/main.css">
 <script src="https://js.arcgis.com/4.4/"></script>
 
+
 <style>
 	html, body, #viewDiv { width: 1000px; height: 800px;}
 
@@ -24,9 +25,29 @@
     }
 
 </style>
+
+<script type="text/javascript">
+	function expandlayerlist(){
+	var ctSpans = document.getElementsByClassName("esri-layer-list__child-toggle");
+
+	//ctSpans["0"]["data-item"].open = true;
+	//ctSpans[1]["data-item"].open = true;
+	//ctSpans[2]["data-item"].open = true;
+	//ctSpans[3]["data-item"].open = true;
+
+	for (var i = 0; i < ctSpans.length; i++){
+		ctSpans[i]["data-item"].open = true;
+		console.log(ctSpans[i]);
+		console.log(i);
+	}
+
+	console.log(ctSpans);
+}
+
+</script>
 </head>
 
-<body>
+<body onload="expandlayerlist();">
 <div id= "viewDiv"></div>
 
 <script>
@@ -239,53 +260,13 @@ require([
 	view.ui.add(legend, "bottom-right");
 
 
-function expandlayerlist(){
-	var ctSpans = document.getElementsByClassName("esri-layer-list__child-toggle");
-
-	/*ctSpans["0"]["data-item"].open = true;
-	ctSpans[1]["data-item"].open = true;
-	ctSpans[2]["data-item"].open = true;
-	ctSpans[3]["data-item"].open = true;
-	*/
-
-	for (var i = 0; i < ctSpans.length; i++){
-		ctSpans[i]["data-item"].open = true;
-		console.log(ctSpans[i]);
-	}
-
-}
-
-function expandPLEASE() {
-
-	// change aria-expanded
-	var x = document.getElementsByClassName("esri-layer-list__child-toggle")[0].getAttribute("aria-expanded");
-		if (x == "false") {
-		x = "true"
-		document.getElementsByClassName("esri-layer-list__child-toggle")[0].setAttribute("aria-expanded", x);
-		}
-	// change title
-	var y = document.getElementsByClassName("esri-layer-list__child-toggle")[0].getAttribute("title");
-		if (y == "Expand") {
-		y = "Collapse";
-		document.getElementsByClassName("esri-layer-list__child-toggle")[0].setAttribute("title", y);
-		}
-
-	// change hidden
-	var z = document.getElementsByClassName("esri-layer-list__list esri-layer-list__list--root esri-layer-list__list--independent")[1].hasAttribute("hidden");
-		alert(z);
-		if (z) {
-		var h1 = document.getElementsByClassName("esri-layer-list__list esri-layer-list__list--root esri-layer-list__list--independent")[1];
-		h1.removeAttribute("hidden");
-		}
-
-} // end expandLayerList function
-
-
-window.onload = expandlayerlist;
-
 //
 });
 
+
+window.onload = expandlayerlist;
 </script>
+<button type="button" class="my_button" onclick="expandlayerlist();">EXPAND</button>  
+
 </body>
 </html>
