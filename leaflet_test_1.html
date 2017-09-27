@@ -31,8 +31,12 @@
 <!--Omnivore-->
 <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
 
+<!--mapbox-->
+<link href='//api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet'>
+
 <style>
-	#map { height: 800px; width: 1000px;}
+body { margin:0; padding:0; }
+#map { position:absolute; top:0; bottom:0; width:100%; }
 </style>
 </head>
 
@@ -59,7 +63,7 @@
 <script>
 
 	//new map
-	var map = L.map("map").setView([46.46, -93.33], 7);
+	var map = L.map("map").setView([45, -93.23], 10);
 
 
 	//add OSM black and white basemap
@@ -68,14 +72,22 @@
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	}).addTo(map);
 
-	//use omnivore to convert csv to json
-	omnivore.csv('punchpizza.csv').addTo(map);
+	//use omnivore to convert csv to geojson
+	var customLayer = L.geoJson(null, {
+    // http://leafletjs.com/reference.html#geojson-style
+    	style: function(feature) {
+        	return { color: '#f00' };
+    	}
+	});
+
+	var pizza = omnivore.csv('punchpizza.csv', null, customLayer);
+	pizza.addTo(map);
 
 
 	//add Home button
-	/*L.easyButton ('fa-home', function (){
-		map.setView([46.46, -93.33], 7);
-	}).addTo(map);*/
+	L.easyButton ('fa-home', function (){
+		map.setView([45, -93.23], 10);
+	}).addTo(map);
 
 	//add layers
 	/*var esb = L.esri.featureLayer({
@@ -151,6 +163,10 @@
   	adp.bindPopup(function (layer) {
     return L.Util.template('<p><b>{PSAP}</b></p>', layer.feature.properties);
   	});*/
+
+  	pizza.bindPopup(function (layer) {
+    return L.Util.template('<p><b>{title}</b><br>{address}, {city} {state} {zip}</p>', layer.feature.properties);
+  	});
 
 
   	//add legend??
