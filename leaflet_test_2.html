@@ -95,9 +95,10 @@
     	})
     }).addTo(map);*/
 
-    $.getJSON("test.geojson", function(data) {
-    	L.geoJson(data).addTo(map);
-    });
+      $.getJSON("test.geojson",function(data){
+    // add GeoJSON layer to the map once the file is loaded
+    	L.geoJSON(data).addTo(map);
+ 	 });
 
 
 
