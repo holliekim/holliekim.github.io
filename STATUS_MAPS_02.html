@@ -6,10 +6,11 @@
 
 <link rel="stylesheet" href="https://js.arcgis.com/4.4/esri/css/main.css">
 <script src="https://js.arcgis.com/4.4/"></script>
+<script src="//ajax.googleapis.com/ajax/libs/dojo/1.12.1/dojo/dojo.js"></script>
 
 
 <style>
-	html, body, #viewDiv { width: 1000px; height: 800px;}
+	html, body, #viewDiv { width: 800px; height: 600px;}
 
 	.esri-legend {
       font-size: 0pt;
@@ -26,8 +27,14 @@
 
 </style>
 
+
+</head>
+
+<body>
+
 <script type="text/javascript">
-	function expandlayerlist(){
+
+function expandlayerlist (){
 	var ctSpans = document.getElementsByClassName("esri-layer-list__child-toggle");
 
 	//ctSpans["0"]["data-item"].open = true;
@@ -37,18 +44,16 @@
 
 	for (var i = 0; i < ctSpans.length; i++){
 		ctSpans[i]["data-item"].open = true;
-		console.log(ctSpans[i]);
-		console.log(i);
+		//console.log(ctSpans[i]);
+		//console.log(i);
 	}
 
-	console.log(ctSpans);
+	console.log("expandlayerlist complete!");
 }
 
 </script>
-</head>
 
-<body onload="expandlayerlist();">
-<div id= "viewDiv"></div>
+<div id= "viewDiv" ></div>
 
 <script>
 
@@ -260,13 +265,27 @@ require([
 	view.ui.add(legend, "bottom-right");
 
 
+	map.on("load", function () {
+	     expandlayerlist();
+	});
+
 //
 });
 
 
-window.onload = expandlayerlist;
+//window.onload = expandlayerlist;
 </script>
-<button type="button" class="my_button" onclick="expandlayerlist();">EXPAND</button>  
+
+
+<!--<script type="text/javascript">
+	expandlayerlist();
+</script>-->
+
+<button type="button" onclick="expandlayerlist()">EXPAND</button>
+
+<script>
+	
+</script>
 
 </body>
 </html>
