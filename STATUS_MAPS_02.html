@@ -1,62 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
- <meta charset="UTF-8"> 
+<meta charset="UTF-8"> 
+
 <title>Status Maps</title>
 
 <link rel="stylesheet" href="https://js.arcgis.com/4.4/esri/css/main.css">
 <script src="https://js.arcgis.com/4.4/"></script>
-<script src="//ajax.googleapis.com/ajax/libs/dojo/1.12.1/dojo/dojo.js"></script>
 
 
 <style>
-	html, body, #viewDiv { width: 800px; height: 600px;}
+	html, body, #viewDiv { width: 98%; height: 98%;}
 
 	.esri-legend {
       font-size: 0pt;
     }
-
     .esri-legend__service-label{
     	font-size: 10pt;
-
     }
-
     .esri-layer-list{
     	width: 250px;
     }
 
+
 </style>
-
-
 </head>
 
 <body>
-
 <script type="text/javascript">
 
-function expandlayerlist (){
-	var ctSpans = document.getElementsByClassName("esri-layer-list__child-toggle");
+//variable
+var done;
 
-	//ctSpans["0"]["data-item"].open = true;
-	//ctSpans[1]["data-item"].open = true;
-	//ctSpans[2]["data-item"].open = true;
-	//ctSpans[3]["data-item"].open = true;
+function expandlayerlist (){
+	if (!done){
+	done = true;
+	var ctSpans = document.getElementsByClassName("esri-layer-list__child-toggle");
 
 	for (var i = 0; i < ctSpans.length; i++){
 		ctSpans[i]["data-item"].open = true;
-		//console.log(ctSpans[i]);
-		//console.log(i);
 	}
-
-	console.log("expandlayerlist complete!");
+	}
 }
-
 </script>
 
 <div id= "viewDiv" ></div>
 
 <script>
-
 require([
 	"esri/Map",
 	"esri/views/MapView",
@@ -71,17 +61,18 @@ require([
 	"esri/geometry/Point",
 	"esri/layers/MapImageLayer",
 	"esri/layers/TileLayer",
-
 	"dojo/domReady!"
 ], function (Map, MapView, FeatureLayer, Home, LayerList, Legend, GroupLayer, TextSymbol, GraphicsLayer, Graphic, Point, MapImageLayer, TileLayer){
-
+	
 	var map = new Map({});
 
+	//basemap with few labels
 	var basemap = new TileLayer({
 		url: "https://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer",
 		listMode: "hide"
 	});
 
+	//mapview - zoom level and center
 	var view = new MapView({
 		container: "viewDiv",
 		map: map,
@@ -89,7 +80,12 @@ require([
 		zoom: 7
 	});
 
-	//Add labels
+	console.log(view.size);
+
+	//disable pop up dock
+	view.popup.dockOptions = {buttonEnabled: false};
+
+	//Add dynamic county labels using ESRI's USA map
 	var countylabellayer = new MapImageLayer({
 		url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
 		listMode: "hide",
@@ -123,44 +119,55 @@ require([
 		}
 	});
 
+	//graphic layer to hold RLN label
 	var glayer = new GraphicsLayer({
 		listMode: "hide"
 	});
 
+	//create label
 	var g = new Graphic();
+
 	g.geometry = new Point(-95.146233, 48.00962);
     g.symbol = text;
     glayer.add(g);
 
 
+    //home button 
 	var homebutton = new Home({
 		view: view
 	});
-
 	
+	//layer list
 	var layerlist = new LayerList({
 		view: view
 	});
 
+	//popup template
+	var template = {
+		title: "PSAP Name: {PSAP}",
+		content: [{
+			type: "text"
+		}],
+		fieldInfos: [{
+			fieldName: "PSAP"
+		}]
+	};
 
-	// Add via Group Layer
+	// Add each layer to Group Layer by category
 	var geocoding = new GroupLayer ({
 		title: "Geocoding",
 		visibilityMode: "exclusive",
 		
-
 		layers:[
 		new FeatureLayer({
 			title: "ALI to RCL",
 			portalItem:{id: "ef7f797139514ba08e1332d8b32bbfaa"}
 		}),
-
 		new FeatureLayer({
 			title: "ALI to ADP",
 			portalItem: {id: "7b46fa64799f42a9a2191e8a86e57a61"}
 			
 		}),
-
 		new FeatureLayer({
 			title: "ADP to RCL",
 			portalItem: {id: "699486c81b5c4ad8aa411d3dbe4e0433"}
@@ -172,14 +179,10 @@ require([
 	var validation = new GroupLayer ({
 		title: "Validation Phase Status",
 		visibilityMode: "exclusive",
-
-
 		layers:[
-
 		new FeatureLayer({
 			title: "Addresses",
 			portalItem: {id: "6101f17dac9e47d58b5ec8f2c51a12d4"}
-
 		}),
 		
 		new FeatureLayer({
@@ -187,19 +190,17 @@ require([
 			portalItem: {id: "23f5382a0b874157836ee53ae55c7d10"}
 			
 		}),
-
 		new FeatureLayer({
 			title: "Community Names",
 			portalItem:{id: "0548fe8a577547c6bd7a78beb650f844"}
 			
 			
 		}),
-
 		new FeatureLayer({
 			title: "Kickoff Meetings",
-			portalItem: {id: "f791f11385024eb3b31ab11994a7bf7c"}
+			portalItem: {id: "f791f11385024eb3b31ab11994a7bf7c"},
+			popupTemplate: template
 		}),
-
 		],
 		
 	});
@@ -208,25 +209,23 @@ require([
 		title: "Data Collection",
 		visibilityMode: "exclusive",
 		layers:[
-
 			new FeatureLayer({
 				title: "Road Centerlines",
-				portalItem:{id:"39eb5d3ae6d1400e9d90f151c679bab2"}
+				portalItem:{id:"2faeb06a0eea4552b65db7e306b638ba"}
 			}),
-
 			new FeatureLayer({
 				title: "ESZs",
 				portalItem: {id: "f7c9b61c166040cda6b9a7e870657671"}
 			}),
-
 			new FeatureLayer ({
 				title: "Address Points",
-				portalItem:{id:"3061464b7800478f8a01137791d5f38d"}
+				portalItem:{id:"4ffe231f54c0400d8776180c3eeecfb1"}
 			})
 		],
 		visible: false
 	});
 
+	//add all group layers to main group layer
 	var alllayers = new GroupLayer({
 		title: "All Layers",
 		visibilityMode: "exclusive"
@@ -237,6 +236,7 @@ require([
 	alllayers.add(validation);
 
 
+	//legend
 	var legend = new Legend ({
 		view: view,
 		layerInfos: [{
@@ -248,10 +248,6 @@ require([
       }]
      });
 
-	//add status layer to map 
-	/*map.add(geocoding);
-	map.add(validation);
-	map.add(datacollect);*/
 
 	//add basemap and layers
 	map.add(basemap);
@@ -259,32 +255,24 @@ require([
 	map.add(glayer);
 	map.add(countylabellayer);
 
+
 	//add buttons, layers, legend
 	view.ui.add(homebutton, "top-left");
 	view.ui.add(layerlist, "top-right");
-	view.ui.add(legend, "bottom-right");
+	view.ui.add(legend, "bottom-left");
 
-
-	map.on("load", function () {
-	     expandlayerlist();
+	//wait for last layer to load...the run expandlayer list to open up layerlist 
+	view.whenLayerView(countylabellayer).then(function(lyrView){
+	  lyrView.watch("updating", function(val){
+	    if(!val){  // wait for the layer view to finish updating
+	      expandlayerlist();
+	    }
+	  });
 	});
+
 
 //
 });
-
-
-//window.onload = expandlayerlist;
-</script>
-
-
-<!--<script type="text/javascript">
-	expandlayerlist();
-</script>-->
-
-<button type="button" onclick="expandlayerlist()">EXPAND</button>
-
-<script>
-	
 </script>
 
 </body>
