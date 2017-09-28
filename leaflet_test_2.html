@@ -15,6 +15,9 @@
    integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
    crossorigin=""></script>
 
+<!-- load ESRI leaflet (only used for basemap)-->
+<script src="https://unpkg.com/esri-leaflet@2.1.1/dist/esri-leaflet.js" integrity="sha512-ECQqaYZke9cSdqlFG08zSkudgrdF6I1d8ViSa7I3VIszJyVqw4ng1G8sehEXlumdMnFYfzY0tMgdQa4WCs9IUw==" crossorigin=""></script>
+
 <!--button icons-->
 <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> 
 
@@ -22,17 +25,14 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
 <script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
 
-<!--Omnivore-->
+<!--Omnivore for #3-->
 <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
 
-<!--test geoJSON file-->
-<script src="test.geojson" type="text/javascript"></script>
+<!--jQuery for #2-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-<!--jQuery-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
-
+<!--import geojson test file for #1 and #2-->
+<script src="map.geojson" type="text/javascript"></script>
 
 
 <style>
@@ -51,72 +51,121 @@
 	var map = L.map("map").setView([45, -93.25], 10);
 
 	//add OSM black and white basemap
-	L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', 
+	var osm = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', 
 		{maxZoom: 18,
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-	}).addTo(map);
+	});
+
+	//add ESRI imagery layer + labels
+	var imagery = L.esri.basemapLayer('Imagery');
+	var labels = L.esri.basemapLayer('ImageryLabels');
+
+	var esriimagery = L.layerGroup ([imagery, labels]).addTo(map);
 	
 	//add Home button
 	L.easyButton ('fa-home', function (){
 		map.setView([45, -93.25], 10);
 	}).addTo(map);
 
-	//add layers
-	//use addTo to have layer turned on at load
-	//use omnivore to convert csv to json
 
-	/* var mystyle = {
-		"color": "#ff7800",
-		"weight": 5,
-		"opacity": 0.65 
-		 };
+///////////////////////// #1 (orange dot on COB)////////////////////////////////////
 
-	L.GeoJSON(geojsontest).addTo(map);*/
-
-
-	/*var customLayer = L.geoJSON(null, {
-  		style: {
-      		color: '#fcc'
-    		},
-		}).addTo(map);*/
-
-	/*var customLayer = L.geoJson(null, {color: 'FF0000'});
-	omnivore.csv('punchpizza.csv', null, customLayer).addTo(map);*/
-
-	//var pizza = omnivore.csv('punchpizza.csv');
-    //pizza.addTo(map);
-
-    /*omnivore.csv('punchpizza.csv')
-    .on('ready', function() {
-    	layer.eachLayer(function(layer) {
-    		layer.setStyle({
-    			color: '#F00000',
-    		})
-    	})
-    }).addTo(map);*/
-
-      $.getJSON("test.geojson",function(data){
-    // add GeoJSON layer to the map once the file is loaded
-    	L.geoJSON(data).addTo(map);
- 	 });
-
-
-
-
-	//layer list/controls
-	/*var maplayers = {
-		"Punch Pizza Locations": pizza,
+	/*var geojsonfeature = {
+		"type": "Feature",
+		"properties": {
+			"name": "COB",
+			"popupContent": "Centennial Office Building"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [-93.099744, 44.953352]
+		}
 	};
 
-	layercontrol = L.control.layers(maplayers,null, {collapsed: false});
+	var geojsonMarkerOptions = {
+	    radius: 8,
+	    fillColor: "#ff7800",
+	    color: "#000",
+	    weight: 1,
+	    opacity: 1,
+	    fillOpacity: 0.8
+	};
+
+
+	L.geoJSON(geojsonfeature, {
+		pointToLayer: function (feature, latlng) {
+			return L.circleMarker (latlng, geojsonMarkerOptions);
+		}
+	}).addTo(map);*/ 
+
+///////////////////////// #1 END ////////////////////////////////////	
+
+///////////////////////// #2 (green dot on COB) /////////////////////
+
+	/*var geojsonMarkerOptions = {
+	    radius: 8,
+	    fillColor: "#2db76b",
+	    color: "#000",
+	    weight: 1,
+	    opacity: 1,
+	    fillOpacity: 0.8
+	};
+
+	//NOTE: map.geojson does NOT include the "var name =" statement at beginning of file!
+
+	$.getJSON("map.geojson",function(data){
+    	L.geoJSON(data, {
+    		pointToLayer: function (feature, latlng) {
+    			return L.circleMarker(latlng, geojsonMarkerOptions);
+    		}
+    	}).addTo(map);
+  	});*/
+
+///////////////////////// #2 END ////////////////////////////////////
+
+///////////////////////// #3 (blue dot on COB) /////////////////////
+
+	var geojsonMarkerOptions = {
+	    radius: 8,
+	    fillColor: "#296ddb",
+	    color: "#000",
+	    weight: 1,
+	    opacity: 1,
+	    fillOpacity: 0.8
+	};
+
+	var customLayer = L.geoJSON(null, {
+	    pointToLayer: function(feature, latlng) {
+	        return L.circleMarker(latlng, geojsonMarkerOptions);
+	    }
+	});
+
+	var pizza = omnivore.csv('punchpizza.csv', null, customLayer);
+
+	pizza.addTo(map);
+
+///////////////////////// #3 END ////////////////////////////////////
+
+
+	
+	//layer list/controls
+	var basemaplayers = {
+		"Open Street Map": osm,
+		"ESRI Imagery": esriimagery
+	};
+
+	var infolayer = {
+		"Punch Pizza Locations": pizza
+	};
+
+	layercontrol = L.control.layers(basemaplayers, infolayer, {collapsed: false});
 	layercontrol.addTo(map);
+
 
 	//popup configure
 	pizza.bindPopup(function (layer) {
     return L.Util.template('<p><b>{name}<br></b>{address}, {city}, {state} {zip}</p>', layer.feature.properties);
-  	});*/
-
-
+  	});
 
 </script>
 
