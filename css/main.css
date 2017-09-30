@@ -45,12 +45,20 @@ body {
   text-align: center;
 }
 
-
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px;
+  width: auto;
+}
 
 .navbar-default {
   background-color: #a2bfc6;
   border-color: #85989d;
   font-weight: bold;
+
 }
 .navbar-default .navbar-brand {
   color: #164753;
@@ -123,5 +131,9 @@ body {
   }
 }
 
+/*Transparent navbar*/
+.navbar-default{
+ 
+}
 
 
