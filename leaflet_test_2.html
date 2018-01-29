@@ -157,7 +157,8 @@
 			});
 		},
 		onEachFeature: function(feature, layer) {
-			layer.bindPopup(feature.properties.title)
+			var content = '<p><b> + feature.properties.title + </b></p>'
+			layer.bindPopup(content)
 		}
 	});
 
@@ -166,9 +167,6 @@
 
 
 ///////////////////////// #4 END ////////////////////////////////////
-
-
-
 
 	
 	//layer list/controls
