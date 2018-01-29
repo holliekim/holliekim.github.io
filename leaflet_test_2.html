@@ -156,6 +156,9 @@
 					iconSize: [40,40]
 				})
 			});
+		},
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(feature.properties.title)
 		}
 	});
 
