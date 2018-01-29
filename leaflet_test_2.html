@@ -157,7 +157,7 @@
 			});
 		},
 		onEachFeature: function(feature, layer) {
-			var content = '<p><b>' + feature.properties.title + '</b></p>'
+			var content = '<p><b>' + feature.properties.title + '</b><br>' + feature.properties.address + '</p>'
 			layer.bindPopup(content)
 		}
 	});
