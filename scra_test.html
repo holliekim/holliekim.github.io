@@ -57,18 +57,29 @@
         })
       });
       
+            // Popup showing the position the user clicked
+      var popup = new ol.Overlay({
+        element: document.getElementById('popup')
+      });
+      map.addOverlay(popup);
+
       map.on('click', function(evt) {
-    var ft = map.forEachFeatureAtPixel(evt.pixel, function(f, l){return f;});
-    if (ft) {
-        var features = ft.get('features'); //this is from the official examples
-        features.forEach(function(feature){
+        var element = popup.getElement();
+        var coordinate = evt.coordinate;
+        var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(
+            coordinate, 'EPSG:3857', 'EPSG:4326'));
 
-            //assumption there is a 'name' property
-            console.info(feature.get('name'));
-
+        $(element).popover('destroy');
+        popup.setPosition(coordinate);
+        // the keys are quoted to prevent renaming in ADVANCED mode.
+        $(element).popover({
+          'placement': 'top',
+          'animation': false,
+          'html': true,
+          'content': '<p>Feature name:</p>' + name
         });
-    }
-});
+        $(element).popover('show');
+      });
 
     </script>
   </body>
