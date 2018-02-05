@@ -57,7 +57,7 @@
         })
       });
       
-            // Popup showing the position the user clicked
+           // Popup showing the position the user clicked
       var popup = new ol.Overlay({
         element: document.getElementById('popup')
       });
@@ -76,7 +76,7 @@
           'placement': 'top',
           'animation': false,
           'html': true,
-          'content': '<p>Feature name:</p>' + name
+          'content': '<p>The location you clicked was:</p><code>' + hdms + '</code>'
         });
         $(element).popover('show');
       });
