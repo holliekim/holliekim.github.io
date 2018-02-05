@@ -56,34 +56,6 @@
           zoom: 8
         })
       });
-      
-      var element = document.getElementById('popup');
-
-var popup = new ol.Overlay({
-  element: element,
-  positioning: 'bottom-center',
-  stopEvent: false
-});
-map.addOverlay(popup);
-
-// display popup on click
-map.on('click', function(evt) {
-  var feature = map.forEachFeatureAtPixel(evt.pixel,
-      function(feature, layer) {
-        return feature;
-      });
-  if (feature) {
-    popup.setPosition(evt.coordinate);
-    $(element).popover({
-      'placement': 'top',
-      'html': true,
-      'content': feature.get('Info')
-    });
-    $(element).popover('show');
-  } else {
-    $(element).popover('destroy');
-  }
-});
 
     </script>
   </body>
