@@ -56,6 +56,19 @@
           zoom: 8
         })
       });
+      
+      map.on('click', function(evt) {
+    var ft = map.forEachFeatureAtPixel(evt.pixel, function(f, l){return f;});
+    if (ft) {
+        var features = ft.get('features'); //this is from the official examples
+        features.forEach(function(feature){
+
+            //assumption there is a 'name' property
+            console.info(feature.get('name'));
+
+        });
+    }
+});
 
     </script>
   </body>
