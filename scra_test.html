@@ -18,11 +18,26 @@
   <body>
     <div id="map" class="map"></div>
     <script type="text/javascript">
+     
+      function polygonStyleFunction(feature, resolution) {
+        return new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: 'blue',
+            width: 1
+          }),
+          fill: new ol.style.Fill({
+            color: 'rgba(0, 0, 255, 0.1)'
+          })
+        });
+      }
 
-    var vectorSource = new ol.source.Vector({
-      url: "subwatersheds.geojson",
-      format: new ol.format.GeoJSON()
-    });
+      var vectorPolygons = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          url: './subwatersheds.geojson',
+          format: new ol.format.GeoJSON()
+        }),
+        style: polygonStyleFunction
+      });
 
       var map = new ol.Map({
         target: 'map',
@@ -30,7 +45,7 @@
           new ol.layer.Tile({
             source: new ol.source.OSM()
           }),
-          vectorSource
+          vectorPolygons
         ],
 
         view: new ol.View({
