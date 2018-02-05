@@ -57,6 +57,16 @@
         })
       });
       
+      popup = new OpenLayers.Popup.FramedCloud(
+        feature.attributes.name,
+        null,
+        popupCloseBox,
+        onPopupClose
+   );
+      feature.popup = popup;
+      popup.feature = feature;
+      map.addPopup(popup);
+      
 
     </script>
   </body>
