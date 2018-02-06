@@ -48,22 +48,6 @@
         })
       }); 
       
-      map.on('click', function(evt) {
-    var f = map.forEachFeatureAtPixel(
-        evt.pixel,
-        function(ft, layer){return ft;}
-    );
-    if (f && f.get('type') == 'click') {
-        var geometry = f.getGeometry();
-        var coord = geometry.getCoordinates();
-
-        var content = '<p>'+f.get('name')+'</p>';
-
-        popup.show(coord, content);
-
-    } else { popup.hide(); }
-
-});
 
 
     </script>
