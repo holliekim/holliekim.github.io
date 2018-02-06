@@ -54,36 +54,52 @@
         })
       }); 
       
-      var element = document.getElementById('popup');
+var
+    container = document.getElementById('popup'),
+    content_element = document.getElementById('popup-content'),
+    closer = document.getElementById('popup-closer');
 
-      var popup = new ol.Overlay({
-        element: element,
-        positioning: 'bottom-center',
-        stopEvent: false
+closer.onclick = function() {
+    overlay.setPosition(undefined);
+    closer.blur();
+    return false;
+};
+var overlay = new ol.Overlay({
+    element: container,
+    autoPan: true,
+    offset: [0, -10]
+});
+map.addOverlay(overlay);
+
+var fullscreen = new ol.control.FullScreen();
+map.addControl(fullscreen);
+
+map.on('click', function(evt){
+    var feature = map.forEachFeatureAtPixel(evt.pixel,
+      function(feature, layer) {
+        return feature;
       });
-      
-      map.addOverlay(popup);
-      
-      map.on('click', function(evt) {
-      var feature = map.forEachFeatureAtPixel(evt.pixel,
-        function(feature, layer) {
-            return feature;
-        });
-      if (feature) {
+    if (feature) {
         var geometry = feature.getGeometry();
         var coord = geometry.getCoordinates();
-        popup.setPosition(coord);
-        coord = ol.proj.transform(coord, 'EPSG:3857', 'EPSG:4326');
-      $(element).popover({
-          'placement': 'top',
-          'html': true,
-          'content': ('<p>Name:</p>'+coord)
-      });
-      $(element).popover('show');
-      } else {
-      $(element).popover('destroy');
-      }
-  });
+        
+        var content = '<h3>' + feature.get('name') + '</h3>';
+        
+        content_element.innerHTML = content;
+        overlay.setPosition(coord);
+        
+        console.info(feature.getProperties());
+    }
+});
+map.on('pointermove', function(e) {
+    if (e.dragging) return;
+       
+    var pixel = map.getEventPixel(e.originalEvent);
+    var hit = map.hasFeatureAtPixel(pixel);
+    
+    map.getTarget().style.cursor = hit ? 'pointer' : '';
+});
+
       
 
 
