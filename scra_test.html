@@ -37,7 +37,9 @@
         source: new ol.source.Vector({
           //subwatersheds is using a messed up projection - fix! Won't display.
           url: '/subwatersheds_all.json',
-          format: new ol.format.GeoJSON()
+          format: new ol.format.GeoJSON({
+            featureProjection: 'EPSG:4326'
+          })
         }),
         style: polygonStyleFunction
       });
