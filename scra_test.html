@@ -120,11 +120,13 @@ map.on('click', function(evt){
         return feature;
       });
     if (feature) {
-        var geometry = feature.getGeometry();
-        var coord = geometry.getCoordinates();
+      //getting geometry of feature messes up the location of the popup...
+        //var geometry = feature.getGeometry();
+        //var coord = geometry.getCoordinates();
+        //console.info(geometry.getCoordinates());
+     
+        var coord = [-92.5, 45.8]  
       
-        console.info(geometry.getCoordinates());
-        
         var content = '<h3>' + feature.get('name') + '</h3>';
         
         content_element.innerHTML = content;
