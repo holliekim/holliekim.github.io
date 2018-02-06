@@ -48,6 +48,37 @@
         })
       }); 
       
+      var element = document.getElementById('popup');
+
+      var popup = new ol.Overlay({
+        element: element,
+        positioning: 'bottom-center',
+        stopEvent: false
+      });
+      
+      map.addOverlay(popup);
+      
+      map.on('click', function(evt) {
+      var feature = map.forEachFeatureAtPixel(evt.pixel,
+        function(feature, layer) {
+            return feature;
+        });
+      if (feature) {
+        var geometry = feature.getGeometry();
+        var coord = geometry.getCoordinates();
+        popup.setPosition(coord);
+        coord = ol.proj.transform(coord, 'EPSG:3857', 'EPSG:4326');
+      $(element).popover({
+          'placement': 'top',
+          'html': true,
+          'content': ('<p>Name:</p>'+coord)
+      });
+      $(element).popover('show');
+      } else {
+      $(element).popover('destroy');
+      }
+  });
+      
 
 
     </script>
