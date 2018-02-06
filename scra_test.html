@@ -122,6 +122,8 @@ map.on('click', function(evt){
     if (feature) {
         var geometry = feature.getGeometry();
         var coord = geometry.getCoordinates();
+      
+        console.info(geometry.getCoordinates());
         
         var content = '<h3>' + feature.get('name') + '</h3>';
         
