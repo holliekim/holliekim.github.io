@@ -56,19 +56,25 @@
         })
       });
       
-      map.on('click', function(evt) {
-        var ft = map.forEachFeatureAtPixel(evt.pixel, function(f, l){return f;});
-        if (ft) {
-            var features = ft.get('features'); //this is from the official examples
-            features.forEach(function(feature){
-
-            //assumption there is a 'name' property
-            console.info(feature.get('name'));
-
-        });
-    }
-});
-
+      var overlay = new Overlay({
+        element: document.getElementById('popup-container'),
+        positioning: 'bottom-center',
+        offset: [0, -10]
+      });
+      
+      map.addOverlay(overlay);
+      
+      map.on('click', function(e) {
+        overlay.setPosition();
+        var features = map.getFeaturesAtPixel(e.pixel);
+        if (features) {
+            var coords = features[0].getGeometry().getCoordinates();
+            var hdms = coordinate.toStringHDMS(proj.toLonLat(coords));
+            overlay.getElement().innerHTML = hdms;
+            overlay.setPosition(coords);
+        }
+      });
+      
     </script>
   </body>
 </html>
