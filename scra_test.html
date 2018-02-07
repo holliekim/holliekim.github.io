@@ -127,7 +127,7 @@ map.on('click', function(evt){
      
         var coord = ol.proj.fromLonLat([-92.5, 45.8]);  
       
-        var content = '<h3>' + feature.get('name') + '</h3>';
+        var content = '<h3>' + feature.get('Name') + '</h3>';
         
         content_element.innerHTML = content;
         overlay.setPosition(coord);
