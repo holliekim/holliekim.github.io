@@ -121,7 +121,7 @@ require([
 	"dojo/domReady!"
 ], function (Map, MapView, FeatureLayer, Home, LayerList, Legend, GroupLayer, TextSymbol, GraphicsLayer, Graphic, Point, MapImageLayer, TileLayer, PopupTemplate, esriConfig){
 
-	esriConfig.defaults.io.corsDetection = false;
+	esriConfig.request.corsEnabledServers.push("dps.mn.gov");
 	
 	var map = new Map({});
 
