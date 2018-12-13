@@ -121,7 +121,8 @@ require([
 	"dojo/domReady!"
 ], function (Map, MapView, FeatureLayer, Home, LayerList, Legend, GroupLayer, TextSymbol, GraphicsLayer, Graphic, Point, MapImageLayer, TileLayer, PopupTemplate, esriConfig){
 
-	esriConfig.defaults.io.esriConfig.defaults.io.corsDetection = false;
+	esriConfig.defaults.io.corsDetection = false;
+	
 	var map = new Map({});
 
 	//basemap with few labels
