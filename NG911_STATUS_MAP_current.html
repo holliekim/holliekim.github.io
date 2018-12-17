@@ -137,10 +137,13 @@ require([
 	"esri/geometry/Point",
 	"esri/layers/MapImageLayer",
 	"esri/layers/TileLayer",
+	"esri/config",
 	"esri/PopupTemplate",
 	"dojo/domReady!"
-], function (Map, MapView, FeatureLayer, Home, LayerList, Legend, GroupLayer, TextSymbol, GraphicsLayer, Graphic, Point, MapImageLayer, TileLayer, PopupTemplate){
+], function (Map, MapView, FeatureLayer, Home, LayerList, Legend, GroupLayer, TextSymbol, GraphicsLayer, Graphic, Point, MapImageLayer, TileLayer, PopupTemplate, esriConfig){
 
+	esriConfig.request.corsDetection = false;
+	
 	var map = new Map({});
 
 	//basemap with few labels
