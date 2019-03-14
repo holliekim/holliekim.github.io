@@ -43,6 +43,7 @@ body {
   height: 25px;
   background-color: #efefef;
   text-align: center;
+  padding-top: 3px;
 }
 
 .navbar-brand {
