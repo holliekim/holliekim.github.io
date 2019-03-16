@@ -2,6 +2,14 @@ body {
   padding-top: 50px;
 }
 
+.a-iconlink {
+  color: #79869b;
+}
+
+.a-iconlink:hover{
+  color: #505e75;
+}
+
 #jumbo {
   /*background: url("background.png");*/
   background-color: #466596;
@@ -47,7 +55,7 @@ body {
 }
 
 .navbar-brand {
-  padding: 0px;
+  padding: 6px;
 }
 .navbar-brand>img {
   height: 100%;
@@ -141,4 +149,8 @@ body {
   padding-top: 10px;
   text-align: center;
   font-variant: small-caps;
+}
+
+#links {
+  text-align: center;
 }
