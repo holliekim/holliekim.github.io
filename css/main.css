@@ -16,6 +16,7 @@ span {
 
 .a-iconlink {
   color: #79869b;
+  margin-right: 25px;
 }
 
 .a-iconlink:hover{
@@ -152,10 +153,6 @@ span {
   }
 }
 
-/*Transparent navbar*/
-.navbar-default{
-
-}
 
 #source{
   padding-top: 10px;
