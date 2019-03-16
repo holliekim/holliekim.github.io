@@ -4,10 +4,29 @@ body {
 
 h1{
   font-family: 'Varela Round', sans-serif;
+  font-weight: bolder;
 }
 
 span {
   font-family: 'Varela Round', sans-serif;
+}
+
+#source{
+  padding-top: 10px;
+  text-align: center;
+  font-family: 'Varela Round', sans-serif;
+  font-variant: small-caps;
+}
+
+#links {
+  text-align: center;
+}
+
+#jumbo {
+  /*background: url("background.png");*/
+  background-color: #466596;
+  background-size: cover;
+  color: white;
 }
 
 .navbar {
@@ -21,13 +40,6 @@ span {
 
 .a-iconlink:hover{
   color: #505e75;
-}
-
-#jumbo {
-  /*background: url("background.png");*/
-  background-color: #466596;
-  background-size: cover;
-  color: white;
 }
 
 .content {
@@ -51,11 +63,6 @@ span {
   margin-top: -40px;
 }
 
-/*.btn-default {
-  background-color: #7f969b;
-  border-color: transparent;
-}*/
-
 .overflow-hidden {
   overflow: hidden;
 }
@@ -69,11 +76,6 @@ span {
 
 .navbar-brand {
   padding: 6px;
-}
-.navbar-brand>img {
-  height: 100%;
-  padding: 15px;
-  width: auto;
 }
 
 .navbar-default {
@@ -151,16 +153,4 @@ span {
     color: #3093ac;
     background-color: #85989d;
   }
-}
-
-
-#source{
-  padding-top: 10px;
-  text-align: center;
-  font-family: 'Varela Round', sans-serif;
-  font-variant: small-caps;
-}
-
-#links {
-  text-align: center;
 }
