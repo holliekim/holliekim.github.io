@@ -2,6 +2,18 @@ body {
   padding-top: 50px;
 }
 
+h1{
+  font-family: 'Varela Round', sans-serif;
+}
+
+span {
+  font-family: 'Varela Round', sans-serif;
+}
+
+.navbar {
+  font-family: 'Varela Round', sans-serif;
+}
+
 .a-iconlink {
   color: #79869b;
 }
@@ -148,6 +160,7 @@ body {
 #source{
   padding-top: 10px;
   text-align: center;
+  font-family: 'Varela Round', sans-serif;
   font-variant: small-caps;
 }
 
