@@ -15,7 +15,7 @@ span {
   font-family: 'Varela Round', sans-serif;
 }
 
-#Skills{
+#About{
   margin-top: -40px;
 }
 
@@ -36,10 +36,27 @@ span {
 }
 
 #jumbo {
-  /*background: url("background.png");*/
+  /* background: url("background.png"); */
   background-color: #466596;
   background-size: cover;
   color: white;
+}
+
+.iwidth{
+  width: 15px;
+}
+
+.alignicons {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.clearboth {
+  clear: both;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .navbar {
@@ -56,8 +73,8 @@ span {
 }
 
 .content {
-  padding-right: 10%;
-  padding-left: 10%;
+  padding-right: 12%;
+  padding-left: 12%;
 }
 
 .underline {
@@ -76,14 +93,15 @@ span {
 }
 
 .divide {
-  height: 25px;
+  height: 5px;
   background-color: #efefef;
   text-align: center;
   padding-top: 3px;
+
 }
 
 .navbar-brand {
-  padding: 6px;
+  /* padding: 6px; */
 }
 
 .navbar-default {

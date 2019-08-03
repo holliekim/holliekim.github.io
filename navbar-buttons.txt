@@ -1,3 +1,0 @@
-<p class="navbar-btn"></p> (put around the a tag in navbar)
-
-class="btn btn-default" (put after the data-target=".navbar-collapse.in")
