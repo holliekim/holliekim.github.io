@@ -36,10 +36,16 @@ span {
 }
 
 #jumbo {
-  /* background: url("background.png"); */
-  background-color: #466596;
+  background-image: url("images/header.png");
+  /* background-color: #466596; */
   background-size: cover;
-  color: white;
+  /* color: white; */
+}
+
+.jumbotron {
+  background-image: url("../images/header.png");
+  background-size: cover;
+  height: 200px;
 }
 
 .iwidth{
@@ -49,10 +55,6 @@ span {
 .alignicons {
   vertical-align: middle;
   margin-right: 10px;
-}
-
-.clearboth {
-  clear: both;
 }
 
 .bold {
